@@ -29,6 +29,17 @@ func main() {
 				Aliases: []string{"e"},
 				Usage:   "with example",
 			},
+			&cli.StringFlag{
+				Name:    "format",
+				Aliases: []string{"f"},
+				Usage:   "output file format",
+			},
+			&cli.StringFlag{
+				Name:    "language",
+				Aliases: []string{"l"},
+				Value:   "english",
+				Usage:   "answer language",
+			},
 		},
 		Action: func(ctx *cli.Context) error {
 			query := strings.Join(ctx.Args().Slice(), " ")
@@ -39,10 +50,18 @@ func main() {
 			if ctx.Bool("example") {
 				hint += " with example"
 			}
-			resp, err := client.CreateChatCompletion(context.Background(), openai.ChatCompletionRequest{Model: "gpt-3.5-turbo", Messages: []openai.ChatCompletionMessage{
+			format := ctx.String("format")
+
+			messages := []openai.ChatCompletionMessage{
 				{Role: "system", Content: "You are a helpful programmer assistant."},
 				{Role: "user", Content: fmt.Sprintf("%s: %s", hint, query)},
-			}})
+				{Role: "user", Content: fmt.Sprintf("answer in %s language", ctx.String("language"))},
+			}
+			if len(format) > 0 {
+				messages = append(messages, openai.ChatCompletionMessage{Role: "user", Content: fmt.Sprintf("output as %s format", format)})
+			}
+
+			resp, err := client.CreateChatCompletion(context.Background(), openai.ChatCompletionRequest{Model: "gpt-3.5-turbo", Messages: messages})
 			if err != nil {
 				return err
 			}
