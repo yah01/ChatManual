@@ -48,7 +48,7 @@ func main() {
 				hint = "tl;dr"
 			}
 			if ctx.Bool("example") {
-				hint += " with example"
+				hint += " with a code example"
 			}
 			format := ctx.String("format")
 
