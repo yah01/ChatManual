@@ -12,9 +12,6 @@ import (
 )
 
 func main() {
-	apiKey := os.Getenv("OPENAI_API_KEY")
-	client := openai.NewClient(apiKey)
-
 	app := &cli.App{
 		Name:                   "cman",
 		Usage:                  "man with ChatGPT",
@@ -54,6 +51,13 @@ func main() {
 				Aliases: []string{"t"},
 				Usage:   "the tech you are talking about, e.g. C++, Rust, system calls...",
 			},
+			&cli.StringFlag{
+				Required: true,
+				Name:     "api",
+				Aliases:  []string{"key"},
+				EnvVars:  []string{"OPENAI_API_KEY"},
+				Usage:    "specify the OpenAI API key, it will be set to env var $OPENAI_API_KEY by default",
+			},
 		},
 
 		Action: func(ctx *cli.Context) error {
@@ -83,6 +87,7 @@ func main() {
 				messages = append(messages, openai.ChatCompletionMessage{Role: "user", Content: fmt.Sprintf("talk about %s", tech)})
 			}
 
+			client := openai.NewClient(ctx.String("api"))
 			resp, err := client.CreateChatCompletion(context.Background(), openai.ChatCompletionRequest{
 				Model:       "gpt-3.5-turbo",
 				Messages:    messages,
