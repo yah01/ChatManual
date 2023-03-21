@@ -1,6 +1,6 @@
-# cman
+# ChatManual
 
-cman is a programming mannual with ChatGPT, it is more powerful than the `man` command, as `cman` could provide information about any programming language, and works well for the std lib and popular lib.
+ChatManual is a programming mannual with ChatGPT, it is more powerful than the `man` command, as `cman` could provide information about any programming language, and works well for the std lib and popular lib.
 
 ## Install
 ```shell
