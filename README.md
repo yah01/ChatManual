@@ -211,3 +211,49 @@ int main() {
 
 In this example, we create a `std::map` and a `std::unordered_map` and insert three key-value pairs into each. We then iterate over the elements in each container and print them out. The output will show that the elements in the `std::map` are sorted based on the keys, while the elements in the `std::unordered_map` are not sorted.
 ````
+
+#### Learn Database
+Read from MySQL with Golang:
+````shell
+$ cman -se -t golang mysql
+MySQL is a popular open-source relational database management system. It is widely used for storing and managing data in web applications, mobile apps, and other software systems. MySQL supports SQL (Structured Query Language) for querying and manipulating data.
+
+Here is an example of connecting to a MySQL database using the Go programming language:
+
+```go
+import (
+    "database/sql"
+    _ "github.com/go-sql-driver/mysql"
+)
+
+func main() {
+    // Open a connection to the database
+    db, err := sql.Open("mysql", "user:password@tcp(localhost:3306)/database_name")
+    if err != nil {
+        panic(err.Error())
+    }
+    defer db.Close()
+
+    // Perform a query
+    rows, err := db.Query("SELECT * FROM users")
+    if err != nil {
+        panic(err.Error())
+    }
+    defer rows.Close()
+
+    // Iterate over the results
+    for rows.Next() {
+        var id int
+        var name string
+        var email string
+        err := rows.Scan(&id, &name, &email)
+        if err != nil {
+            panic(err.Error())
+        }
+        fmt.Printf("ID: %d, Name: %s, Email: %s\n", id, name, email)
+    }
+}
+```
+
+Go is a programming language developed by Google. It is a statically typed language with a focus on simplicity, concurrency, and performance. Go is often used for building web servers, network tools, and other backend systems. It has a growing community and a rich set of libraries and tools.
+````
