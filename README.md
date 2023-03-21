@@ -160,3 +160,54 @@ cman -l=中文 mmap
 ```
 
 For more details, see `cman help`
+
+### More examples
+
+#### Compare
+Let's find the differences between `std::unordered_map` and `std::map`, and request an exmaple:
+````shell
+$ cman -se std::unordered_map diff std::map
+`std::map` and `std::unordered_map` are both container classes in C++ that store elements in key-value pairs. The main difference between the two is the way they store and access these pairs.
+
+`std::map` stores its elements in a sorted order based on the keys, which allows for efficient searching and retrieval of elements. However, this sorting process can slow down insertion and deletion operations.
+
+`std::unordered_map`, on the other hand, uses a hash table to store its elements, which allows for constant-time access to elements. However, this comes at the cost of not being able to maintain the order of the elements.
+
+Here is an example of using `std::map` and `std::unordered_map`:
+
+```
+#include <iostream>
+#include <map>
+#include <unordered_map>
+
+int main() {
+    // Using std::map
+    std::map<std::string, int> myMap;
+    myMap["apple"] = 1;
+    myMap["banana"] = 2;
+    myMap["orange"] = 3;
+
+    std::cout << "Map elements: ";
+    for (auto const& pair : myMap) {
+        std::cout << "{" << pair.first << ", " << pair.second << "} ";
+    }
+    std::cout << std::endl;
+
+    // Using std::unordered_map
+    std::unordered_map<std::string, int> myUnorderedMap;
+    myUnorderedMap["apple"] = 1;
+    myUnorderedMap["banana"] = 2;
+    myUnorderedMap["orange"] = 3;
+
+    std::cout << "Unordered map elements: ";
+    for (auto const& pair : myUnorderedMap) {
+        std::cout << "{" << pair.first << ", " << pair.second << "} ";
+    }
+    std::cout << std::endl;
+
+    return 0;
+}
+```
+
+In this example, we create a `std::map` and a `std::unordered_map` and insert three key-value pairs into each. We then iterate over the elements in each container and print them out. The output will show that the elements in the `std::map` are sorted based on the keys, while the elements in the `std::unordered_map` are not sorted.
+````
