@@ -59,7 +59,7 @@ with open("file.txt", "r") as f:
 In this example, we open a file "file.txt" for reading and use mmap to memory-map the file. We then read the contents of the file using the memory-mapped file object and print it to the console. Finally, we close the memory-mapped file object.
 ````
 
-You may notice that this answers about python, not the expected C system call.
+You may have noticed that this answer is about python, not the expected C system call.
 
 Provide the topic by flag "-t":
 ````shell
@@ -213,7 +213,7 @@ In this example, we create a `std::map` and a `std::unordered_map` and insert th
 ````
 
 #### Learn Database
-Read from MySQL with Golang:
+Request an example that reads from MySQL with Golang:
 ````shell
 $ cman -se -t golang mysql
 MySQL is a popular open-source relational database management system. It is widely used for storing and managing data in web applications, mobile apps, and other software systems. MySQL supports SQL (Structured Query Language) for querying and manipulating data.

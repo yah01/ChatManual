@@ -47,9 +47,9 @@ func main() {
 				Usage:   "answer language",
 			},
 			&cli.StringFlag{
-				Name:    "tech",
+				Name:    "topic",
 				Aliases: []string{"t"},
-				Usage:   "the tech you are talking about, e.g. C++, Rust, system calls...",
+				Usage:   "the topic you are talking about, e.g. C++, Rust, system calls...",
 			},
 			&cli.StringFlag{
 				Required: true,
