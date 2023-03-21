@@ -35,3 +35,5 @@ If you expect an answer in other language:
 ```shell
 cman -l=中文 waitgroup
 ```
+
+For more details, see `cman help`
