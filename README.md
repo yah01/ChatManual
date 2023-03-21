@@ -4,7 +4,7 @@ ChatManual is a programming mannual with ChatGPT, it is more powerful than the `
 
 ## Install
 ```shell
-go install github.com/yah01/cman@latest
+go install github.com/yah01/cman@v1.0.0
 ```
 
 ## Usage
