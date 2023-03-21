@@ -18,7 +18,9 @@ func main() {
 	app := &cli.App{
 		Name:                   "cman",
 		Usage:                  "man with ChatGPT",
+		EnableBashCompletion:   true,
 		UseShortOptionHandling: true,
+		Suggest:                true,
 
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
@@ -47,30 +49,38 @@ func main() {
 				Value:   "english",
 				Usage:   "answer language",
 			},
+			&cli.StringFlag{
+				Name:    "tech",
+				Aliases: []string{"t"},
+				Usage:   "the tech you are talking about, e.g. C++, Rust, system calls...",
+			},
 		},
 
 		Action: func(ctx *cli.Context) error {
 			query := strings.Join(ctx.Args().Slice(), " ")
-			hint := "man"
+			hint := "manual"
 			if ctx.Bool("short") {
-				hint = "tl;dr"
+				hint = "short summary"
 			}
-			if ctx.Bool("detail") {
-				hint += " with code of function signature and description of parameters"
-			}
-			if ctx.Bool("example") {
-				hint += " with a code example"
-			}
-			format := ctx.String("format")
 
 			messages := []openai.ChatCompletionMessage{
 				{Role: "system", Content: "You are a helpful programmer assistant."},
 				{Role: "user", Content: fmt.Sprintf("%s: %s", hint, query)},
-				// {Role: "user", Content: "with the function/class definition"},
 				{Role: "user", Content: fmt.Sprintf("answer in %s language", ctx.String("language"))},
 			}
+			if ctx.Bool("example") {
+				messages = append(messages, openai.ChatCompletionMessage{Role: "user", Content: "answer with a code example"})
+			}
+			if ctx.Bool("detail") {
+				messages = append(messages, openai.ChatCompletionMessage{Role: "user", Content: "answer with function signature and description of parameters"})
+			}
+			format := ctx.String("format")
+			tech := ctx.String("tech")
 			if len(format) > 0 {
 				messages = append(messages, openai.ChatCompletionMessage{Role: "user", Content: fmt.Sprintf("output as %s format", format)})
+			}
+			if len(tech) > 0 {
+				messages = append(messages, openai.ChatCompletionMessage{Role: "user", Content: fmt.Sprintf("talk about %s", tech)})
 			}
 
 			resp, err := client.CreateChatCompletion(context.Background(), openai.ChatCompletionRequest{
